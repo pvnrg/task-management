@@ -4,7 +4,7 @@
 This Project contain only APIs.
 
 Requirements to setup and run this project as below.
-- Xampp / Wampp require to run the PHP files.
+- Xampp / WampServer require to run the PHP files.
 - Mysql require to setup the database.
 
 
