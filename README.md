@@ -21,4 +21,4 @@ All Endpoints are listed below for your reference:
 - action=addTask
 - action=addNote
 - action=getTasks&user_id=#
-- action=filter&status={New, Incomplete, Complete}&due_date={YYYY-MM-DD}&priority={High, Medium, Low}&notes={true, false}
+- action=getTasks&user_id=#&status={New, Incomplete, Complete}&due_date={YYYY-MM-DD}&priority={High, Medium, Low}&notes={true, false}
