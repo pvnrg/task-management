@@ -1,5 +1,6 @@
 <?php
 use \Firebase\JWT\JWT;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class api {
 
@@ -267,20 +268,36 @@ class api {
 			$this->validate($validation_fields);
 			
 			$user_id = $_GET['user_id'];
+			$status = $_GET['status'];
+			$due_date = $_GET['due_date'];
+			$priority = $_GET['priority'];
+			$note = (!empty($_GET['note']) && $_GET['note'] == 'true') ? 1 : 0;
 
-			$sql = "SELECT * FROM `task` where user_id = '$user_id' order by id desc";
-			$result= $this->Main_model->custom_query($sql);
-			$tasks = [];
-			foreach($result as $keyRes => $valueRes) {
-				print_r($valueRes); die;
-				$tasks[] = $valueRes;
+			$where = " user_id = '$user_id' ";
+			if (!empty($status)) {
+				$where .= (!empty($where) ? " AND" : "") . " status = '$status'";
 			}
-			$parentData = [];
-			foreach($tasks as $key => $parent){
+
+			if (!empty($due_date)) {
+				$where .= (!empty($where) ? " AND" : "") ." due_date = '$due_date'";
+			}
+
+			if (!empty($priority)) {
+				$where .= (!empty($where) ? " AND" : "") ." priority = '$priority'";
+			}
+
+			$sql = "SELECT *, (SELECT count(id) FROM `note` n WHERE n.task_id = t.id) note_count FROM `task` as t where $where order by FIELD(priority, 'High', 'Medium', 'Low'), note_count DESC";
+
+			$data = $this->Main_model->custom_query($sql);
+			$response_data = [];
+			foreach($data as $key => $parent){
+				if ($note == 1 && $parent['note_count'] == 0) {
+					continue;
+				}
+				$parent['notes'] = [];
 				$newsql = "SELECT * FROM `note` where task_id=".$parent['id']." ";
 				$newrecord= $this->Main_model->custom_query($newsql);
-				$parentData[$key] = $parent;
-				$parentData[$key]['notes'] = [];
+				
 				foreach($newrecord as $child){
 					$sql = "SELECT * FROM `note_attachments` where note_id=".$child['id']." ";
 					$note_attachments = $this->Main_model->custom_query($sql);
@@ -288,12 +305,13 @@ class api {
 					foreach($note_attachments as $note_attachment){
 						$child['note_attachments'][] = PROJECT_BASE_PATH . "/attechments/" . $note_attachment['attachments'];
 					}
-					$parentData[$key]['notes'][] = $child;
+					$parent['notes'][] = $child;
 				}
-				$json['status'] = true;
-				$json['message'] = '';
+				$response_data[] = $parent;
 			}
-			$json['data'] = $parentData;
+			$json['status'] = true;
+			$json['message'] = '';
+			$json['data'] = $response_data;
 		} catch (Exception $e){
 			$json['status'] = false;
 			$json['message'] = $e->getMessage();

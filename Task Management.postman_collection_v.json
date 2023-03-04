@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "e7329343-9cbe-dbed-6555-a8f52a364937",
+		"name": "Task Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5747732"
+	},
+	"item": [
+		{
+			"name": "Create Database",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://task.local/install.php",
+					"protocol": "http",
+					"host": [
+						"task",
+						"local"
+					],
+					"path": [
+						"install.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "pavan ganvani",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "pavan@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://task.local/api.php?action=userRegister",
+					"protocol": "http",
+					"host": [
+						"task",
+						"local"
+					],
+					"path": [
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "userRegister"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "pavan@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://task.local/api.php?action=userLogin",
+					"protocol": "http",
+					"host": [
+						"task",
+						"local"
+					],
+					"path": [
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "userLogin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Nzc5MzUxMjAsImV4cCI6MTY3Nzk1NjcyMCwidWlkIjoiMSIsImVtYWlsIjoicGF2YW5AZ21haWwuY29tIn0.OBk_UUKd-kllk3UHOX-wt73kQRlqAbJVvAksJ7LjPNE"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "subject",
+							"value": "Task subject 001",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Task Description 001",
+							"type": "text"
+						},
+						{
+							"key": "start_date",
+							"value": "2023-03-04",
+							"type": "text"
+						},
+						{
+							"key": "due_date",
+							"value": "2023-03-31",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "New",
+							"type": "text"
+						},
+						{
+							"key": "priority",
+							"value": "Low",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://task.local/api.php?action=addTask",
+					"protocol": "http",
+					"host": [
+						"task",
+						"local"
+					],
+					"path": [
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "addTask"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Note",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "task_id",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "subject",
+							"value": "Note subject 001",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "Test Note 001",
+							"type": "text"
+						},
+						{
+							"key": "file[]",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://task.local/api.php?action=addNote",
+					"protocol": "http",
+					"host": [
+						"task",
+						"local"
+					],
+					"path": [
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "addNote"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://task.local/api.php?action=getTasks&user_id=1",
+					"protocol": "http",
+					"host": [
+						"task",
+						"local"
+					],
+					"path": [
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "getTasks"
+						},
+						{
+							"key": "user_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
